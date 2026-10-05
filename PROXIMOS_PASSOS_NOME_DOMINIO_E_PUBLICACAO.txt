@@ -1,0 +1,266 @@
+GUIA PARA PERSONALIZAR, REGISTRAR UM DOMÍNIO E PUBLICAR O SITE
+Projeto: conceitos-energia
+Atualizado em: 05/10/2026
+
+Este documento orienta ações futuras. Nenhum domínio foi comprado e nenhum
+site foi publicado durante a criação deste guia.
+
+1. ESCOLHER QUAL CONCEITO SERÁ O SITE OFICIAL
+
+Hoje existem quatro endereços dentro do mesmo projeto:
+  /             = galeria para escolher o conceito
+  /industrial   = conceito industrial
+  /regional     = conceito regional
+  /portfolio    = conceito portfólio
+
+Para o site oficial, recomendo escolher um conceito e colocá-lo na página
+principal (/), para o visitante encontrar diretamente a apresentação da empresa.
+Essa adaptação ainda precisa ser feita em src/App.tsx. Também será necessário
+retirar o link "Ver outros conceitos" e decidir se as outras versões continuam
+acessíveis. Remover apenas os links não impede o acesso pelas URLs antigas.
+
+Não é necessário comprar um domínio para cada template. Um único domínio pode
+atender às três páginas. Comprar o domínio também não escolhe automaticamente
+qual layout será exibido: isso depende da configuração do projeto.
+
+Exemplo de pedido para a próxima etapa:
+"Use o conceito regional como página principal, retire a galeria pública e
+adapte o conteúdo para os dados reais da empresa que vou fornecer."
+
+2. TROCAR "EMPRESA" PELO NOME REAL
+
+Faça uma cópia de segurança do projeto antes de alterar os arquivos. Edite os
+arquivos de origem, nunca apenas os arquivos de dist/: o próximo build recria
+essa pasta.
+
+Abra src/content.ts em um editor de texto ou de código. No início do arquivo,
+altere os campos do objeto company. Exemplo de preenchimento — os textos abaixo
+são marcadores e devem ser substituídos pelos dados confirmados:
+
+  name: "NOME REAL",
+  descriptor: "Engenharia e Energia",
+  fullName: "NOME REAL — Engenharia e Energia",
+
+O campo name é o nome exibido na marca do cabeçalho. fullName é usado em títulos
+e outras identificações. descriptor é a descrição que aparece junto à marca.
+Confira também territory e description para manter a apresentação correta.
+
+No mesmo arquivo:
+  copy           = títulos, chamadas e textos dos três conceitos;
+  services       = nomes e descrições dos serviços;
+  galleryItems   = itens ilustrativos da galeria do portfólio;
+  concepts       = textos da galeria inicial;
+  company.contacts = canais de contato.
+
+Não faça uma substituição indiscriminada de toda ocorrência de "Empresa":
+algumas são o rótulo do menu ou do campo de formulário, não o nome da marca.
+
+Atualize também:
+  index.html          = <title> e conteúdo da meta description;
+  public/favicon.svg  = pequeno símbolo que aparece na aba do navegador;
+  README.md           = identificação do projeto, se desejar.
+
+Em index.html, a descrição atual fala em "Três conceitos institucionais".
+Na versão definitiva, substitua por uma apresentação factual da empresa.
+O título da aba também é atualizado pelo React em src/App.tsx; ao transformar
+um conceito em página principal, revise o título final dessa página.
+
+O nome inserido em src/content.ts não altera palavras dentro das fotografias.
+Algumas referências contêm "EMPRESA" em uniformes e equipamentos: esses nomes
+são pixels da imagem. Será preciso substituir as fotos ou editar esses arquivos
+se essas identificações não forem adequadas à marca definitiva.
+
+Depois de inserir um nome longo, confira o cabeçalho em celular e desktop.
+O espaço e o tamanho da marca podem precisar de ajuste em src/styles.css.
+
+3. CADASTRAR CONTATOS E PREPARAR O CONTEÚDO FINAL
+
+Em company.contacts, preencha somente dados reais:
+  email        = endereço de e-mail que já existe e recebe mensagens;
+  phone        = telefone no formato legível para o visitante;
+  phoneHref    = "tel:+" seguido de país, DDD e número, sem espaços;
+  whatsappUrl  = "https://wa.me/" seguido de país, DDD e número, só com dígitos;
+  location     = região atendida ou localização confirmada.
+
+Preencha phone e phoneHref juntos. O componente de contato passará a exibir os
+canais cadastrados. Campos vazios não geram canais fictícios.
+
+O formulário atual continua sendo demonstrativo mesmo após preencher esses
+contatos. Ele valida campos, mas não envia mensagem nem salva dados. Para a
+primeira publicação, você pode usar apenas os links reais de contato e retirar
+o formulário. Para receber mensagens pelo formulário, será necessária uma
+integração futura; não remova o aviso de demonstração antes disso funcionar.
+
+Revise os serviços e substitua as imagens por fotos próprias ou autorizadas.
+Os arquivos atuais são referências ilustrativas, não comprovação de projetos
+executados. A origem e as limitações estão em public/images/SOURCES.md.
+Mantenha a indicação "ilustrativa" enquanto ela se aplicar.
+
+Antes da publicação definitiva, retire de index.html esta linha:
+  <meta name="robots" content="noindex, nofollow" />
+
+Ela está presente para a demonstração não solicitar indexação. Retirá-la não
+garante que o site apareça imediatamente nas buscas. Uma prévia sem login pode
+ser acessada por quem conhece o endereço, mesmo com noindex.
+
+4. ENTENDER O QUE VOCÊ VAI CONTRATAR
+
+DOMÍNIO: o endereço, como <nomecurto>.com.br. O registro tem prazo e precisa
+ser renovado. "Comprar" não significa que o domínio será seu para sempre.
+
+HOSPEDAGEM: o serviço que mantém o site acessível na internet.
+
+DNS: as configurações que ligam o domínio à hospedagem e aos outros serviços.
+
+E-MAIL PROFISSIONAL: a caixa postal no domínio da empresa. Não presuma que ela
+está incluída no registro do domínio ou na hospedagem do site; verifique a oferta.
+Escrever um e-mail em src/content.ts não cria essa caixa postal.
+
+Para este projeto, proponho um caminho simples: domínio .com.br no Registro.br
+e publicação dos arquivos estáticos na Netlify. É uma sugestão, não uma obrigação.
+Você pode registrar o endereço em um serviço e hospedar o site em outro.
+
+5. ESCOLHER E REGISTRAR UM DOMÍNIO
+
+Defina primeiro o nome da empresa e prepare alternativas curtas, fáceis de
+pronunciar e digitar. Prefira evitar hífens e números que causem confusão.
+
+Padrões para pesquisar, substituindo <nomecurto> pelo nome escolhido:
+  <nomecurto>.com.br
+  <nomecurto>energia.com.br
+  <nomecurto>engenharia.com.br
+  <nomecurto>.com
+
+São apenas modelos de nomes. A disponibilidade não foi consultada. Um endereço
+pode estar disponível hoje e ser registrado por outra pessoa antes da compra.
+
+Para .com.br:
+  1) Acesse https://registro.br/ e pesquise o domínio desejado.
+  2) Se estiver disponível, inicie o registro e crie ou acesse sua conta.
+  3) Informe o titular correto, com CPF ou CNPJ conforme solicitado.
+     Para um domínio da empresa, prefira que a titularidade e os acessos fiquem
+     sob controle da própria empresa, não apenas de um prestador.
+  4) Confira a grafia, o prazo, o valor total e as condições de renovação.
+  5) Efetue o pagamento e acompanhe a confirmação no painel.
+  6) Guarde os dados de acesso e registre a data de renovação.
+
+O passo a passo oficial está em:
+https://www.registro.br/ajuda/tutoriais-administrativos/
+As condições de registro estão em:
+https://registro.br/ajuda/registro-de-novos-dominios/
+
+Para .com, uma opção a comparar é o Cloudflare Registrar:
+https://domains.cloudflare.com/
+Ele usa os próprios servidores DNS nos domínios registrados por seu serviço;
+isso deve ser considerado na configuração com a hospedagem escolhida.
+Fonte: https://developers.cloudflare.com/registrar/get-started/register-domain/
+
+Compare o preço da renovação, não somente o primeiro ano promocional. Não fixei
+preços neste guia: consulte os valores no momento da contratação. Também não é
+necessário comprar várias extensões. Se desejar registrar .com.br e .com, escolha
+um endereço principal e configure o outro para redirecionar para ele.
+
+6. PREPARAR E CONFERIR OS ARQUIVOS PARA PUBLICAÇÃO
+
+No PowerShell, dentro da pasta do projeto, execute:
+
+  npm.cmd ci
+  npm.cmd run build
+  npm.cmd run preview -- --port 4173 --strictPort
+
+Requisito deste projeto: Node.js 22.12 ou superior. A instalação inicial das
+dependências requer internet. Se o build apontar erro, corrija antes de publicar.
+
+Abra http://127.0.0.1:4173/ e confira nome, textos, fotos, menu e contatos.
+Use Ctrl+C no terminal para encerrar a prévia. O build gera a pasta dist/.
+
+Se continuar com as três páginas, abra também /industrial, /regional e
+/portfolio diretamente e atualize cada uma com F5.
+
+O projeto tem um teste de interface que pode ser repetido. Com o servidor de
+desenvolvimento aberto em outro terminal na porta 5173:
+
+  npx.cmd playwright install chromium
+  npm.cmd run verify
+
+Esse teste foi feito para a demonstração atual. Se uma única versão substituir
+a galeria, adapte as rotas e as expectativas em scripts/verify.mjs.
+
+7. PUBLICAR NA NETLIFY QUANDO A VERSÃO ESTIVER APROVADA
+
+Estes passos colocam conteúdo na internet. São instruções para executar no
+futuro; a criação deste TXT não executou nenhuma publicação.
+
+Caminho manual:
+  1) Crie ou acesse uma conta da empresa em https://app.netlify.com/.
+  2) Confira plano, limites de uso e configurações de cobrança.
+  3) Use a opção de publicação manual/arrastar pasta.
+  4) Envie a pasta dist/ gerada pelo build, contendo index.html.
+  5) Abra o endereço fornecido pela Netlify e teste o resultado.
+
+Envie somente dist/, não node_modules/ nem o workspace inteiro. Em atualizações,
+gere um novo build e envie a nova dist/ na área de deploys do MESMO projeto.
+
+Para automatizar depois, conecte um repositório Git ao projeto de hospedagem.
+Use comando de build "npm run build", pasta de publicação "dist" e uma versão
+de Node compatível. Alterações enviadas à branch configurada podem publicar
+automaticamente, portanto escolha essa branch conscientemente.
+
+Fonte oficial de publicação manual e por Git:
+https://docs.netlify.com/deploy/create-deploys/
+
+As rotas precisam continuar funcionando ao atualizar a página. O arquivo
+public/_redirects já será copiado para dist/ com a regra:
+
+  /* /index.html 200
+
+Ela permite que a aplicação carregue nas rotas sem arquivo físico próprio.
+Em outra hospedagem, será necessário configurar um fallback equivalente.
+Fonte: https://docs.netlify.com/manage/routing/redirects/rewrites-proxies/
+
+8. CONECTAR O DOMÍNIO AO SITE PUBLICADO
+
+Uma opção simples é manter o DNS no Registro.br e apontar somente o site:
+  1) No projeto da Netlify, abra a área de domínios e adicione o domínio comprado.
+  2) Inclua a versão com www e escolha o endereço principal.
+  3) Selecione a orientação de DNS externo.
+  4) No painel que administra o DNS do domínio, crie os registros indicados
+     pela Netlify para o domínio principal e para www.
+  5) Copie exatamente os tipos e destinos mostrados no painel. Não use IPs
+     de tutoriais antigos e não adicione registros conflitantes.
+  6) Aguarde a propagação e verifique o status do domínio na hospedagem.
+
+Não precisa transferir o registro do domínio para a Netlify. Se preferir
+delegar todo o DNS a outro serviço, revise antes os registros existentes.
+Preserve os registros de e-mail, como MX e TXT, caso já use caixas postais.
+
+Fonte para DNS externo:
+https://docs.netlify.com/manage/domains/configure-domains/configure-external-dns/
+
+Com o domínio validado, confira se o HTTPS foi provisionado pela hospedagem.
+A Netlify oferece certificados automáticos; confirme o estado no painel.
+Teste o endereço com https://, com e sem www, e o redirecionamento ao principal.
+Fonte: https://docs.netlify.com/manage/domains/secure-domains-with-https/https-ssl/
+
+9. DEPOIS DE PUBLICAR
+
+Abra o domínio pelo celular e teste menu, imagens, botões e canais de contato.
+Faça um teste real de recebimento nos canais cadastrados. Confirme que nenhuma
+mensagem do site sugere envio de formulário que ainda não existe.
+
+Para mudar textos depois: edite src/content.ts, revise a prévia, gere novo build
+e atualize a hospedagem. O domínio normalmente continua o mesmo; não é necessário
+comprar outro domínio nem alterar o DNS a cada atualização de conteúdo.
+
+Mantenha uma cópia dos arquivos de origem, acompanhe a renovação do domínio e
+guarde os acessos da empresa ao registro, à hospedagem e ao eventual e-mail.
+
+Dados a reunir para a próxima etapa:
+  - conceito escolhido;
+  - nome oficial e nome curto para o cabeçalho;
+  - logotipo, se houver;
+  - apresentação e serviços confirmados;
+  - telefone, WhatsApp e e-mail reais;
+  - fotografias autorizadas;
+  - duas ou três opções de domínio;
+  - decisão sobre manter só links de contato ou integrar um formulário real.
